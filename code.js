@@ -15,6 +15,7 @@ function GETIGN(uuid) {
       var playerJSON = UrlFetchApp.fetch(url.toString());
       var playerObject = JSON.parse(playerJSON);
       username = playerObject.username;
+      cache.put(uuid, username, 3600);
     }
     return username; 
   } catch (e) {
