@@ -6,13 +6,19 @@
 * @customfunction
 */
 function GETIGN(uuid) {
+  var username = '';
   try {
-    var url = 'https://api.ashcon.app/mojang/v2/user/' + uuid;
-    var playerJSON = UrlFetchApp.fetch(url.toString());
-    var playerObject = JSON.parse(playerJSON);
-    return playerObject.username;
+    var cache = CacheService.getDocumentCache();
+    if (cache.get(uuid)) username = cache.get(uuid);
+    else {
+      var url = 'https://api.ashcon.app/mojang/v2/user/' + uuid;
+      var playerJSON = UrlFetchApp.fetch(url.toString());
+      var playerObject = JSON.parse(playerJSON);
+      username = playerObject.username;
+    }
+    return username; 
   } catch (e) {
-    throw new Error('Enter a valid UUID')
+    throw new Error('Enter a valid UUID');
   }
 }
 
