@@ -5,7 +5,7 @@
 * @return {string} The most recent username.
 * @customfunction
 */
-function GETIGN(uuid, date) {
+function GETIGN(uuid) {
   try {
     var url = 'https://api.ashcon.app/mojang/v2/user/' + uuid;
     var playerJSON = UrlFetchApp.fetch(url.toString());
