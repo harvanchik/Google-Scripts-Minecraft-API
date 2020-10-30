@@ -6,14 +6,13 @@
 * @customfunction
 */
 function GETIGN(uuid) {
-  var username = '';
+  let cache = CacheService.getDocumentCache();
+  let username = cache.get(uuid);
   try {
-    var cache = CacheService.getDocumentCache();
-    if (cache.get(uuid)) username = cache.get(uuid);
-    else {
-      var url = 'https://api.ashcon.app/mojang/v2/user/' + uuid;
-      var playerJSON = UrlFetchApp.fetch(url.toString());
-      var playerObject = JSON.parse(playerJSON);
+    if (username === null) {
+      const url = 'https://api.ashcon.app/mojang/v2/user/' + uuid;
+      let playerJSON = UrlFetchApp.fetch(url);
+      let playerObject = JSON.parse(playerJSON);
       username = playerObject.username;
       cache.put(uuid, username, 3600);
     }
